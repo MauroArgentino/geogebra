@@ -73,7 +73,6 @@ import org.geogebra.web.full.gui.layout.panels.AnimatingPanel;
 import org.geogebra.web.full.gui.layout.panels.CASDockPanelW;
 import org.geogebra.web.full.gui.layout.panels.ConstructionProtocolDockPanelW;
 import org.geogebra.web.full.gui.layout.panels.DataAnalysisViewDockPanelW;
-import org.geogebra.web.full.gui.layout.panels.DataCollectionDockPanelW;
 import org.geogebra.web.full.gui.layout.panels.Euclidian2DockPanelW;
 import org.geogebra.web.full.gui.layout.panels.EuclidianDockPanelW;
 import org.geogebra.web.full.gui.layout.panels.EuclidianDockPanelWAbstract;
@@ -96,7 +95,6 @@ import org.geogebra.web.full.gui.view.algebra.RadioTreeItem;
 import org.geogebra.web.full.gui.view.algebra.RetexKeyboardListener;
 import org.geogebra.web.full.gui.view.consprotocol.ConstructionProtocolNavigationW;
 import org.geogebra.web.full.gui.view.data.DataAnalysisViewW;
-import org.geogebra.web.full.gui.view.dataCollection.DataCollectionView;
 import org.geogebra.web.full.gui.view.probcalculator.ProbabilityCalculatorViewW;
 import org.geogebra.web.full.gui.view.spreadsheet.CopyPasteCutW;
 import org.geogebra.web.full.gui.view.spreadsheet.MyTableW;
@@ -170,7 +168,6 @@ public class GuiManagerW extends GuiManager
 	private DataAnalysisViewW dataAnalysisView = null;
 	private boolean listeningToLogin = false;
 	private ToolBarW toolbarForUpdate = null;
-	private DataCollectionView dataCollectionView;
 	private GeoGebraFrameFull frame;
 
 	private GOptionPaneW optionPane;
@@ -821,8 +818,6 @@ public class GuiManagerW extends GuiManager
 		// register data analysis view
 		layout.registerPanel(new DataAnalysisViewDockPanelW(getApp()));
 
-		//register data collection view
-		layout.registerPanel(new DataCollectionDockPanelW());
 		return true;
 	}
 
@@ -1178,24 +1173,6 @@ public class GuiManagerW extends GuiManager
 		probCalculator.attachView();
 	}
 
-	/**
-	 * @return Data collection view
-	 */
-	public DataCollectionView getDataCollectionView() {
-		if (dataCollectionView == null) {
-			dataCollectionView = new DataCollectionView(getApp());
-			dataCollectionView.attachView();
-		}
-		return dataCollectionView;
-	}
-
-	/**
-	 * Update lists in data collection view
-	 */
-	public void updateDataCollectionView() {
-		this.dataCollectionView.updateGeoList();
-	}
-
 	@Override
 	public EuclidianView getActiveEuclidianView() {
 		if (layout == null) {
@@ -1388,9 +1365,6 @@ public class GuiManagerW extends GuiManager
 		}
 		if (propertiesView != null) {
 			((PropertiesViewW) propertiesView).setLabels();
-		}
-		if (this.dataCollectionView != null) {
-			this.dataCollectionView.setLabels();
 		}
 
 		getApp().getDialogManager().setLabels();
@@ -2112,18 +2086,6 @@ public class GuiManagerW extends GuiManager
 		}
 
 		return null;
-	}
-
-	@Override
-	public boolean hasDataCollectionView() {
-		return dataCollectionView != null;
-	}
-
-	@Override
-	public void getDataCollectionViewXML(StringBuilder sb, boolean asPreference) {
-		if (hasDataCollectionView()) {
-			dataCollectionView.getXML(sb, asPreference);
-		}
 	}
 
 	@Override

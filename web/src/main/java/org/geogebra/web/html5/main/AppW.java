@@ -72,7 +72,6 @@ import org.geogebra.common.move.operations.Network;
 import org.geogebra.common.move.operations.NetworkOperation;
 import org.geogebra.common.plugin.EventType;
 import org.geogebra.common.plugin.ScriptManager;
-import org.geogebra.common.plugin.SensorLogger;
 import org.geogebra.common.sound.SoundManager;
 import org.geogebra.common.util.AsyncOperation;
 import org.geogebra.common.util.GTimer;
@@ -145,7 +144,6 @@ import org.geogebra.web.html5.util.UUIDW;
 import org.geogebra.web.html5.util.ViewW;
 import org.geogebra.web.html5.util.debug.LoggerW;
 import org.geogebra.web.html5.util.keyboard.KeyboardManagerInterface;
-import org.geogebra.web.plugin.WebsocketLogger;
 
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.core.client.GWT;
@@ -220,7 +218,6 @@ public abstract class AppW extends App implements SetLabels, HasLanguage {
 	private ReaderTimer readerTimer;
 	private boolean toolLoadedFromStorage;
 	private Storage storage;
-	WebsocketLogger webSocketLogger = null;
 	private boolean keyboardNeeded;
 	private ArrayList<ViewsChangedListener> viewsChangedListener = new ArrayList<>();
 	private GDimension preferredSize;
@@ -2955,14 +2952,6 @@ public abstract class AppW extends App implements SetLabels, HasLanguage {
 	 */
 	public void addToHeight(int heightDiff) {
 		// for applets with keyboard only
-	}
-
-	@Override
-	public SensorLogger getSensorLogger() {
-		if (webSocketLogger == null) {
-			webSocketLogger = new WebsocketLogger(getKernel());
-		}
-		return webSocketLogger;
 	}
 
 	/**
