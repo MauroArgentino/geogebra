@@ -282,7 +282,7 @@ public class EuclidianViewW extends EuclidianView implements
 		if (isGridOrAxesShown() || hasBackgroundImages() || isTraceDrawn()
 				|| appW.showResetIcon()
 		        || kernel.needToShowAnimationButton()
-				|| getSettings().getBackgroundType() != BackgroundType.NONE) {
+				|| getBackgroundType() != BackgroundType.NONE) {
 			g2w.drawImage(bgImage, 0, 0);
 		} else {
 			g2w.fillWith(getBackgroundCommon());
@@ -1297,7 +1297,7 @@ public class EuclidianViewW extends EuclidianView implements
 		double origXZero = getXZero();
 		double origScale = getXscale();
 		if (app.isWhiteboardActive()
-				&& getSettings().getBackgroundType() != BackgroundType.NONE
+				&& getBackgroundType() != BackgroundType.NONE
 				&& selectionRectangle == null) {
 			setCoordSystem(525 / SCALE_STANDARD * origScale, getYZero(),
 					origScale, origScale);
@@ -1519,7 +1519,7 @@ public class EuclidianViewW extends EuclidianView implements
 	}
 
 	private SVGResource getSVGRulingResource() {
-		switch (getSettings().getBackgroundType()) {
+		switch (getBackgroundType()) {
 		case ELEMENTARY12:
 			return GuiResourcesSimple.INSTANCE.mow_ruling_elementary12();
 		case ELEMENTARY12_HOUSE:
@@ -1538,6 +1538,10 @@ public class EuclidianViewW extends EuclidianView implements
 		default:
 			return null;
 		}
+	}
+
+	private BackgroundType getBackgroundType() {
+		return getSettings() == null ? BackgroundType.NONE : getSettings().getBackgroundType();
 	}
 
 	private void createSVGBackgroundIfNeeded() {
